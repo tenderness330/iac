@@ -1,0 +1,16 @@
+- hosts: develop
+  remote_user: ubuntu
+  become: yes
+
+  tasks:
+  - name: install ruby
+    apt:
+      name: ruby
+      state: present
+      update_cache: yes
+
+  - name: install serverspec
+    gem:
+      name: serverspec
+      user_install: no
+      state: latest

@@ -1,1 +1,2 @@
 # iac
+Ansible使ってjenkinsとserverspecをインストールしようっていう魂胆
