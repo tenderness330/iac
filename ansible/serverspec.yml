@@ -14,3 +14,10 @@
       name: serverspec
       user_install: no
       state: latest
+
+  - name: install rake
+    gem:
+      name: rake
+      user_install: no
+      state: latest
+
