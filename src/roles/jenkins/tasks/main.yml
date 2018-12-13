@@ -1,20 +1,60 @@
 ---
-- name: install Java JDK
-  apt:
-    name: openjdk-8-jdk
-    state: present
-    update_cache: yes
+#----------------------------------------------------
+# for apt
+#----------------------------------------------------
 
-- name: get jenkins apt-key
-  apt_key:
-    state: present
-    url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
+- block:
+  - name: install Java JDK
+    apt:
+      name: openjdk-8-jdk
+      state: present
+      update_cache: yes
+  
+  - name: get jenkins apt-key
+    apt_key:
+      state: present
+      url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
+  
+  - name: add jenkins repository
+    apt_repository:
+      state: present
+      repo: deb https://pkg.jenkins.io/debian binary/
+  
+  - name: install jenkins
+    apt: name=jenkins state=latest update_cache=yes
 
-- name: add jenkins repository
-  apt_repository:
-    state: present
-    repo: deb https://pkg.jenkins.io/debian binary/
+  when: ansible_pkg_mgr == "apt"
 
-- name: install jenkins
-  apt: name=jenkins state=latest update_cache=yes
---- 
+#----------------------------------------------------
+# for yum
+#----------------------------------------------------
+
+- block:
+  - name: install Java JDK
+    yum:
+      name: java-1.8.0-openjdk
+      state: present
+      update_cache: yes
+  
+  - name: add jenkins repository
+    yum_repository:
+      name: Jenkins
+      file: jenkins
+      description: for Jenkins repository
+      baseurl: http://pkg.jenkins.io/redhat
+      state: present
+
+  - name: get jenkins gpgkey
+    rpm_key:
+      state: present
+      key: https://jenkins-ci.org/redhat/jenkins-ci.org.key
+  
+  - name: install jenkins
+    yum:
+      name: jenkins
+      state: latest
+      update_cache: yes
+
+  when: ansible_pkg_mgr == "yum"
+...
+

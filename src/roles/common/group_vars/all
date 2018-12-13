@@ -1,2 +1,0 @@
-users: 
-  - { name: modifyuser, password: "$1$nDJKuKCJ$U5hFKLVU.9VobAKz8Pq/k1" groups: wheel}

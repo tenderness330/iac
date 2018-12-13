@@ -1,0 +1,5 @@
+
+- hosts: iac
+  roles:
+    - jenkins
+  become: yes
