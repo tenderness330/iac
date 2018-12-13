@@ -21,7 +21,10 @@
       repo: deb https://pkg.jenkins.io/debian binary/
   
   - name: install jenkins
-    apt: name=jenkins state=latest update_cache=yes
+    apt:
+      name: jenkins
+      state: latest
+      update_cache: yes
 
   when: ansible_pkg_mgr == "apt"
 
@@ -55,6 +58,16 @@
       state: latest
       update_cache: yes
 
+#----------------------------------------------------
+# for all
+#----------------------------------------------------
+
   when: ansible_pkg_mgr == "yum"
+
+- name: enable jenkins
+  systemd:
+     name: jenkins
+     enabled: yes
+     state: started
 ...
 

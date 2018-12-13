@@ -1,2 +1,4 @@
 hosts
+*.retry
 ansible.cfg
+private.yml
